@@ -9,21 +9,24 @@ const Cards = () => {
 
   
   
+  
   const dispatch = useDispatch();
   const { currentPage, countriesPerPage } = useSelector((state) => state)
   
   const indexOfLastCountry = currentPage * countriesPerPage;
   const indexOfFirstCountry = indexOfLastCountry - countriesPerPage;
   const currentCountries = countries.slice(indexOfFirstCountry, indexOfLastCountry);
+  const newCountries = allCountriesFilter.slice(indexOfFirstCountry, indexOfLastCountry);
   
   const handlePageChange = (page) => {
     dispatch(changePage(page));
   };
   
-  const countriesToDisplay = allCountriesFilter.length > 0 ? allCountriesFilter : currentCountries;
+  const countriesToDisplay = allCountriesFilter.length > 0 ? newCountries : currentCountries;
   
+  const buttonCountries = countriesToDisplay === newCountries ?  allCountriesFilter : countries
   return (
-    <div>
+    <div className="boxCountry">
       {countriesToDisplay.map(({ id, name, banderaImagen, continentes, capital, subregion, area, poblacion }) => {
         return (
           <Card
@@ -43,7 +46,7 @@ const Cards = () => {
         <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
           Anterior
         </button>
-        <button onClick={() => handlePageChange(currentPage + 1)} disabled={indexOfLastCountry >= countries.length}>
+        <button onClick={() => handlePageChange(currentPage + 1)} disabled={indexOfLastCountry >= buttonCountries.length}>
           Siguiente
         </button>
       </div>

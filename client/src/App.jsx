@@ -8,14 +8,17 @@ import Order from './controllers/order/Order'
 import Filter from './controllers/filter/Filters'
 import {useDispatch} from 'react-redux'
 import { useEffect } from 'react'
-import { fetchCountries } from './redux/actions'
+import { fetchCountries, fetchActivities } from './redux/actions'
 
 
 function App() {
   const dispatch = useDispatch()
+
   useEffect(() => {
     dispatch(fetchCountries());
+    dispatch(fetchActivities())
   }, []);
+
   
 
   const { pathname } = useLocation()

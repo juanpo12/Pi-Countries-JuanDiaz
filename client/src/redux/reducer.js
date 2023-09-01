@@ -1,11 +1,13 @@
-import { ORDER, LOAD_COUNTRIES, CHANGE_PAGE, ORDER_POPULATION, ORDER_ALPHABETICAl, COUNTRIES_FILTER} from "./actions-type";
+import { ORDER, LOAD_COUNTRIES, CHANGE_PAGE, ORDER_POPULATION, ORDER_ALPHABETICAl, COUNTRIES_FILTER, LOAD_ACTIVITIES } from "./actions-type";
 
 const initialState = {
     allCountries: [],
     allCountriesFilter: [],
+    allActivities: [],
     currentPage: 1,
     countriesPerPage: 10,
 };
+
 
 const reducer = (state = initialState, { type, payload }) => {
     switch (type) {
@@ -17,23 +19,23 @@ const reducer = (state = initialState, { type, payload }) => {
                     ? allCountriesCopy.sort((a, b) => a.id.localeCompare(b.id))
                     : allCountriesCopy.sort((a, b) => b.id.localeCompare(a.id)),
             };
-        
+
         case ORDER_ALPHABETICAl:
             const allCountriesOrderAlp = [...state.allCountries];
-            return{
+            return {
                 ...state,
                 allCountries: payload === 'O'
-                ? allCountriesOrderAlp.sort((a, b) => a.name.localeCompare(b.name))
-                : allCountriesOrderAlp.sort((a, b) => b.name.localeCompare(a.name))
+                    ? allCountriesOrderAlp.sort((a, b) => a.name.localeCompare(b.name))
+                    : allCountriesOrderAlp.sort((a, b) => b.name.localeCompare(a.name))
             }
 
         case ORDER_POPULATION:
-            const allCountriesOrder = [ ...state.allCountries ]
-            return{
+            const allCountriesOrder = [...state.allCountries]
+            return {
                 ...state,
                 allCountries: payload === 'P'
-                ? allCountriesOrder.sort((a,b) => a.poblacion - b.poblacion)
-                : allCountriesOrder.sort((a,b) => b.poblacion - a.poblacion)
+                    ? allCountriesOrder.sort((a, b) => a.poblacion - b.poblacion)
+                    : allCountriesOrder.sort((a, b) => b.poblacion - a.poblacion)
             }
 
         case LOAD_COUNTRIES:
@@ -42,21 +44,27 @@ const reducer = (state = initialState, { type, payload }) => {
                 allCountries: payload,
             };
 
+        case LOAD_ACTIVITIES:
+            return {
+                ...state,
+                allActivities: payload,
+            };
+
         case CHANGE_PAGE:
             return {
                 ...state,
                 currentPage: payload,
             };
 
-            case COUNTRIES_FILTER:
-                const filteredCountries = state.allCountries.filter(country => {
-                    return country.continentes == payload;
-                });
-                
-                return {
-                    ...state,
-                    allCountriesFilter: filteredCountries
-                };
+        case COUNTRIES_FILTER:
+            const filteredCountries = state.allCountries.filter(country => {
+                return country.continentes == payload;
+            });
+
+            return {
+                ...state,
+                allCountriesFilter: filteredCountries
+            };
 
         default:
             return { ...state };
