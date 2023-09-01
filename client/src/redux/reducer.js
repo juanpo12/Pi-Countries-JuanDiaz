@@ -1,7 +1,8 @@
-import { ORDER, LOAD_COUNTRIES, CHANGE_PAGE, ORDER_POPULATION, ORDER_ALPHABETICAl} from "./actions-type";
+import { ORDER, LOAD_COUNTRIES, CHANGE_PAGE, ORDER_POPULATION, ORDER_ALPHABETICAl, COUNTRIES_FILTER} from "./actions-type";
 
 const initialState = {
     allCountries: [],
+    allCountriesFilter: [],
     currentPage: 1,
     countriesPerPage: 10,
 };
@@ -22,8 +23,8 @@ const reducer = (state = initialState, { type, payload }) => {
             return{
                 ...state,
                 allCountries: payload === 'O'
-                ? allCountriesOrderAlp.sort((a, b) => a.localeCompare(b))
-                : allCountriesOrderAlp.sort((a, b) => b.localeCompare(a))
+                ? allCountriesOrderAlp.sort((a, b) => a.name.localeCompare(b.name))
+                : allCountriesOrderAlp.sort((a, b) => b.name.localeCompare(a.name))
             }
 
         case ORDER_POPULATION:
@@ -46,6 +47,16 @@ const reducer = (state = initialState, { type, payload }) => {
                 ...state,
                 currentPage: payload,
             };
+
+            case COUNTRIES_FILTER:
+                const filteredCountries = state.allCountries.filter(country => {
+                    return country.continentes == payload;
+                });
+                
+                return {
+                    ...state,
+                    allCountriesFilter: filteredCountries
+                };
 
         default:
             return { ...state };

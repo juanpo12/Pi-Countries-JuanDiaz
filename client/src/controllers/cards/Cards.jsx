@@ -3,22 +3,28 @@ import { useSelector, useDispatch } from 'react-redux';
 import Card from "../card/card";
 import { changePage } from '../../redux/actions'
 
-const Cards = ({ onClose }) => {
+const Cards = () => {
   const countries = useSelector(state => state.allCountries);
+  const allCountriesFilter = useSelector(state => state.allCountriesFilter);
+
+  
+  
   const dispatch = useDispatch();
   const { currentPage, countriesPerPage } = useSelector((state) => state)
-
+  
   const indexOfLastCountry = currentPage * countriesPerPage;
   const indexOfFirstCountry = indexOfLastCountry - countriesPerPage;
   const currentCountries = countries.slice(indexOfFirstCountry, indexOfLastCountry);
-
+  
   const handlePageChange = (page) => {
     dispatch(changePage(page));
   };
-
+  
+  const countriesToDisplay = allCountriesFilter.length > 0 ? allCountriesFilter : currentCountries;
+  
   return (
     <div>
-      {currentCountries.map(({ id, name, banderaImagen, continentes, capital, subregion, area, poblacion }) => {
+      {countriesToDisplay.map(({ id, name, banderaImagen, continentes, capital, subregion, area, poblacion }) => {
         return (
           <Card
             key={id}

@@ -1,4 +1,4 @@
-import { ORDER, LOAD_COUNTRIES, CHANGE_PAGE, ORDER_POPULATION, ORDER_ALPHABETICAl } from "./actions-type";
+import { ORDER, LOAD_COUNTRIES, CHANGE_PAGE, ORDER_POPULATION, ORDER_ALPHABETICAl, COUNTRIES_FILTER } from "./actions-type";
 import axios from 'axios';
 
 export const changePage = (page) => ({
@@ -17,7 +17,7 @@ export const fetchCountries = () => {
             const countries = response.data;
             dispatch(loadCountries(countries));
         } catch (error) {
-            console.error('Error fetching countries:', error);
+            console.error(error);
         }
     };
 };
@@ -41,5 +41,12 @@ export const orderCards = (order) => {
     return {
         type: ORDER,
         payload: order
+    }
+}
+
+export const filterCountries = (filter) => {
+    return {
+        type: COUNTRIES_FILTER,
+        payload: filter
     }
 }
