@@ -9,7 +9,7 @@ import Filter from './controllers/filter/Filters'
 import {useDispatch} from 'react-redux'
 import { useEffect } from 'react'
 import { fetchCountries, fetchActivities } from './redux/actions'
-
+import FormActivity from './controllers/formactivties/FormActivity'
 
 function App() {
   const dispatch = useDispatch()
@@ -31,6 +31,7 @@ function App() {
         {pathname !== '/' && <Filter/>}
 
         <Routes>
+          <Route path='/form' element={<FormActivity/>}/>
           <Route path='/home' element={<Cards/>} />
           <Route path='/detail/:id' element={<Detail />} />
           <Route path='/' element={<LandingPage />} />

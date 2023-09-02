@@ -1,4 +1,4 @@
-import { ORDER, LOAD_COUNTRIES, CHANGE_PAGE, ORDER_POPULATION, ORDER_ALPHABETICAl, COUNTRIES_FILTER, LOAD_ACTIVITIES } from "./actions-type";
+import { ORDER, LOAD_COUNTRIES, CHANGE_PAGE, ORDER_POPULATION, ORDER_ALPHABETICAl, COUNTRIES_FILTER, LOAD_ACTIVITIES, OPEN_MODAL, MODAL_CONTENT, CLOSE_MODAL } from "./actions-type";
 import axios from 'axios';
 
 export const changePage = (page) => ({
@@ -32,7 +32,7 @@ export const loadActivities = (activities) => ({
 export const fetchActivities = () => {
     return async (dispatch) => {
         try {
-            const response = await axios.get('http://localhost:3001/activities'); // Cambiado a axios.get
+            const response = await axios.get('http://localhost:3001/activities'); 
             const activities = response.data;
             console.log(response.data)
             dispatch(loadActivities(activities));
@@ -41,6 +41,25 @@ export const fetchActivities = () => {
         }
     };
 }
+
+export const fetchContent = (name) => {
+    return async (dispatch) => {
+       const endpoint = `http://localhost:3001/countries?name=${name}`;
+       const {data} = await axios(endpoint);
+       return dispatch({
+          type: MODAL_CONTENT,
+          payload: data[0]
+       });
+    };
+}
+
+export const openModal = () => ({
+    type: OPEN_MODAL,
+});
+
+export const closeModal = () => ({
+    type: CLOSE_MODAL,
+});
 
 export const orderPopulation = (order) => {
     return {

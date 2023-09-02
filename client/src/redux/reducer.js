@@ -1,11 +1,13 @@
-import { ORDER, LOAD_COUNTRIES, CHANGE_PAGE, ORDER_POPULATION, ORDER_ALPHABETICAl, COUNTRIES_FILTER, LOAD_ACTIVITIES } from "./actions-type";
+import { ORDER, LOAD_COUNTRIES, CHANGE_PAGE, ORDER_POPULATION, ORDER_ALPHABETICAl, COUNTRIES_FILTER, LOAD_ACTIVITIES, CLOSE_MODAL, OPEN_MODAL, MODAL_CONTENT } from "./actions-type";
 
 const initialState = {
     allCountries: [],
     allCountriesFilter: [],
     allActivities: [],
+    searchCountry: [],
     currentPage: 1,
     countriesPerPage: 10,
+    isModalOpen: false
 };
 
 
@@ -65,6 +67,22 @@ const reducer = (state = initialState, { type, payload }) => {
                 ...state,
                 allCountriesFilter: filteredCountries
             };
+
+        case OPEN_MODAL:
+            return {
+                ...state,
+                isModalOpen: true,
+            };
+        case CLOSE_MODAL:
+            return {
+                ...state,
+                isModalOpen: false,
+            };
+        case MODAL_CONTENT:
+            return {
+                ...state,
+                searchCountry: payload
+            }
 
         default:
             return { ...state };
