@@ -1,4 +1,4 @@
-import { ORDER, LOAD_COUNTRIES, CHANGE_PAGE, ORDER_POPULATION, ORDER_ALPHABETICAl, COUNTRIES_FILTER, LOAD_ACTIVITIES, OPEN_MODAL, MODAL_CONTENT, CLOSE_MODAL } from "./actions-type";
+import { ORDER, LOAD_COUNTRIES, CHANGE_PAGE, ORDER_POPULATION, ORDER_ALPHABETICAl, COUNTRIES_FILTER, LOAD_ACTIVITIES, OPEN_MODAL, MODAL_CONTENT, CLOSE_MODAL, POST_ACTIVITY } from "./actions-type";
 import axios from 'axios';
 
 export const changePage = (page) => ({
@@ -34,7 +34,6 @@ export const fetchActivities = () => {
         try {
             const response = await axios.get('http://localhost:3001/activities'); 
             const activities = response.data;
-            console.log(response.data)
             dispatch(loadActivities(activities));
         } catch (error) {
             console.error(error);
@@ -52,6 +51,11 @@ export const fetchContent = (name) => {
        });
     };
 }
+
+export const postActivity = (activity) => ({
+    type: POST_ACTIVITY,
+    payload: activity
+})
 
 export const openModal = () => ({
     type: OPEN_MODAL,

@@ -1,4 +1,4 @@
-import { ORDER, LOAD_COUNTRIES, CHANGE_PAGE, ORDER_POPULATION, ORDER_ALPHABETICAl, COUNTRIES_FILTER, LOAD_ACTIVITIES, CLOSE_MODAL, OPEN_MODAL, MODAL_CONTENT } from "./actions-type";
+import { ORDER, LOAD_COUNTRIES, CHANGE_PAGE, ORDER_POPULATION, ORDER_ALPHABETICAl, COUNTRIES_FILTER, LOAD_ACTIVITIES, CLOSE_MODAL, OPEN_MODAL, MODAL_CONTENT, POST_ACTIVITY } from "./actions-type";
 
 const initialState = {
     allCountries: [],
@@ -11,7 +11,7 @@ const initialState = {
 };
 
 
-const reducer = (state = initialState, { type, payload }) => {
+const reducer = (state = initialState, { type, payload }) => {console.log(payload);
     switch (type) {
         case ORDER:
             const allCountriesCopy = [...state.allCountries];
@@ -38,6 +38,11 @@ const reducer = (state = initialState, { type, payload }) => {
                 allCountries: payload === 'P'
                     ? allCountriesOrder.sort((a, b) => a.poblacion - b.poblacion)
                     : allCountriesOrder.sort((a, b) => b.poblacion - a.poblacion)
+            }
+        case POST_ACTIVITY:
+            return{
+                ...state,
+                allActivities: payload
             }
 
         case LOAD_COUNTRIES:
