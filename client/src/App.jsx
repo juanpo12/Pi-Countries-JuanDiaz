@@ -6,7 +6,7 @@ import { Route, Routes, useLocation } from 'react-router-dom'
 import Detail from './controllers/detail/Detail'
 import Order from './controllers/order/Order'
 import Filter from './controllers/filter/Filters'
-import {useDispatch} from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { fetchCountries, fetchActivities } from './redux/actions'
 import FormActivity from './controllers/formactivties/FormActivity'
@@ -18,28 +18,31 @@ function App() {
   useEffect(() => {
     dispatch(fetchCountries());
     dispatch(fetchActivities())
-  }, []);
+  }, [dispatch]);
 
-  
+
 
   const { pathname } = useLocation()
 
   return (
     <>
       <div>
-        {pathname !== '/' && <Nav  />}
-        {pathname !== '/' && <Order/>}
-        {pathname !== '/'  && <Filter/>}
-        
+        {pathname !== '/' && <Nav />}
+        {pathname === '/home' && <Order />}
+        <div className={pathname === '/home' ? 'show-filter' : 'hide-filter'}>
+          <Filter  />
+        </div>
+
+
 
 
 
         <Routes>
-          <Route path='/form' element={<FormActivity/>}/>
-          <Route path='/home' element={<Cards/>} />
+          <Route path='/form' element={<FormActivity />} />
+          <Route path='/home' element={<Cards />} />
           <Route path='/detail/:id' element={<Detail />} />
           <Route path='/' element={<LandingPage />} />
-          <Route path='/activities' element={<AllActivities/>}/>
+          <Route path='/activities' element={<AllActivities />} />
         </Routes>
       </div>
     </>

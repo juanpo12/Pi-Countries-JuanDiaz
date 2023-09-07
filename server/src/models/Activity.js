@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-    sequelize.define('Activity', {
+    sequelize.define('activity', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -23,8 +23,8 @@ module.exports = (sequelize) => {
             type: DataTypes.INTEGER
         },
         temporada: {
-            type: DataTypes.ENUM('Verano', 'Otoño', 'Invierno', 'Primavera'),
-            allowNull: false
+            type: DataTypes.ARRAY(DataTypes.STRING),
+            
         }
     })
 }

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 
 
-const Card = ({id, name, banderaImagen, continentes, capital, subregion, area, poblacion, onClose}) => {
+const Card = ({id, name, banderaImagen, continentes, capital, subregion, area, poblacion, activity}) => {
 
     
     return (

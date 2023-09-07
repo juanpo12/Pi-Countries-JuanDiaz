@@ -1,4 +1,4 @@
-const { Country } = require('../db')
+const { Country, Activity } = require('../db')
 const { countriesByName } =  require('./countriesByName')
 
 
@@ -10,7 +10,9 @@ const obtenerPaises = async (req, res) => {
             return res.status(200).json(countryName)
         }
 
-        const paises = await Country.findAll();
+        const paises = await Country.findAll({
+            include: Activity
+        });
         return res.status(200).json(paises)
         
 

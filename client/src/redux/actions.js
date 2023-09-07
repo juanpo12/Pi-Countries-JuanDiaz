@@ -1,4 +1,4 @@
-import { ORDER, LOAD_COUNTRIES, CHANGE_PAGE, ORDER_POPULATION, ORDER_ALPHABETICAl, COUNTRIES_FILTER, LOAD_ACTIVITIES, OPEN_MODAL, MODAL_CONTENT, CLOSE_MODAL, POST_ACTIVITY } from "./actions-type";
+import { ORDER, LOAD_COUNTRIES, CHANGE_PAGE, ORDER_POPULATION, ORDER_ALPHABETICAl, COUNTRIES_FILTER, LOAD_ACTIVITIES, OPEN_MODAL, MODAL_CONTENT, CLOSE_MODAL, POST_ACTIVITY, FILTER_ACTIVITIES } from "./actions-type";
 import axios from 'axios';
 
 export const changePage = (page) => ({
@@ -23,6 +23,11 @@ export const fetchCountries = () => {
     };
 };
 
+export const filterActvities = (filter) => ({
+    type: FILTER_ACTIVITIES,
+    payload: filter
+});
+
 
 export const loadActivities = (activities) => ({
     type: LOAD_ACTIVITIES,
@@ -32,9 +37,9 @@ export const loadActivities = (activities) => ({
 export const fetchActivities = () => {
     return async (dispatch) => {
         try {
-            const response = await axios.get('http://localhost:3001/activities'); 
-            const activities = response.data;
-            dispatch(loadActivities(activities));
+            const {data} = await axios('http://localhost:3001/activities');
+
+            dispatch(loadActivities(data));
         } catch (error) {
             console.error(error);
         }
@@ -43,19 +48,31 @@ export const fetchActivities = () => {
 
 export const fetchContent = (name) => {
     return async (dispatch) => {
-       const endpoint = `http://localhost:3001/countries?name=${name}`;
-       const {data} = await axios(endpoint);
-       return dispatch({
-          type: MODAL_CONTENT,
-          payload: data[0]
-       });
+        const endpoint = `http://localhost:3001/countries?name=${name}`;
+        const { data } = await axios(endpoint);
+        return dispatch({
+            type: MODAL_CONTENT,
+            payload: data[0]
+        });
     };
 }
 
-export const postActivity = (activity) => ({
+export const postActivity = (data) => ({
     type: POST_ACTIVITY,
-    payload: activity
+    payload: data
 })
+
+export const postBackActivity = (activityData) => {
+    return async (dispatch) => {
+        try {
+            const {data} = await axios.post('http://localhost:3001/activities', activityData);
+            dispatch(postActivity(data));
+        } catch (error) {
+
+            console.error('Error al crear la actividad:', error);
+        }
+    };
+};
 
 export const openModal = () => ({
     type: OPEN_MODAL,

@@ -1,4 +1,4 @@
-const { Activity} = require('../db');
+const { Activity } = require('../db');
 
 const newActivity = async (req, res) => {
     try {
@@ -11,7 +11,10 @@ const newActivity = async (req, res) => {
             dificultad,
             duracion,
             temporada
+
         })
+ 
+
         await activityNew.addCountries(paises)
         return res.status(200).json(activityNew)
 

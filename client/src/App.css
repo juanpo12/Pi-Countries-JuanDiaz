@@ -5,6 +5,16 @@
   text-align: center;
 }
 
+/* Clase para mostrar el componente Filter */
+.show-filter {
+  display: block; 
+}
+
+
+.hide-filter {
+  display: none; 
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;

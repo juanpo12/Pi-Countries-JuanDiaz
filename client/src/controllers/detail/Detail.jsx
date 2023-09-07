@@ -5,45 +5,48 @@ import { useState, useEffect } from "react";
 
 const Detail = () => {
 
-    const [country, setCountry] = useState({
-        id: "",
-        banderaImagen: "",
-        name: "",
-        continentes: "",
-        capital: "",
-        subregion: "",
-        area: "",
-        poblacion: "",
-    });
-    const {id} = useParams();
+  const [country, setCountry] = useState({
+    id: "",
+    banderaImagen: "",
+    name: "",
+    continentes: "",
+    capital: "",
+    subregion: "",
+    area: "",
+    poblacion: "",
+    activities: [],
+  });
+  const { id } = useParams();
 
-    useEffect(() => {
-        async function fetchData() {
-          try {
-            const { data } = await axios(`http://localhost:3001/countries/${id}`);
-            if (data.name) {
-              setCountry(data);
-            }
-          } catch (error) {
-            window.alert('Error al obtener los detalles del país');
-          }
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const { data } = await axios(`http://localhost:3001/countries/${id}`);
+        if (data.name) {
+          setCountry(data);
         }
-      
-        fetchData();
-      }, [id]);
+      } catch (error) {
+        window.alert('Error al obtener los detalles del país');
+      }
+    }
 
-    return(
-        <div>
-            <h2>{country?.id}</h2>
-            <img src={country?.banderaImagen} alt={country?.name} />
-            <h2>{country?.name}</h2>
-            <h2>{country?.continentes}</h2>
-            <h2>{country?.capital}</h2>
-            <h2>{country?.subregion}</h2>
-            <h2>Area: {country?.area}</h2>
-            <h2>Poblacion: {country?.poblacion}</h2>
-        </div>
-    )
+    fetchData();
+  }, [id]);
+  const activityCountry = country?.activities.map(activity => activity.nombre).join(', ')
+
+  return (
+    <div>
+      <h2>{country?.id}</h2>
+      <img src={country?.banderaImagen} alt={country?.name} />
+      <h2>{country?.name}</h2>
+      <h2>{country?.continentes}</h2>
+      <h2>{country?.capital}</h2>
+      <h2>{country?.subregion}</h2>
+      <h2>Area: {country?.area}</h2>
+      <h2>Poblacion: {country?.poblacion}</h2>
+      <p>Actividades: {activityCountry ? activityCountry : 'No hay actividades'}</p>
+    </div>
+  )
 
 }
 
