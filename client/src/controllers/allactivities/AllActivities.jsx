@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchActivities } from "../../redux/actions";
+import './AllActivities.css'
+
 const AllActivities = () => {
   const dispatch = useDispatch();
 
@@ -19,7 +21,8 @@ const AllActivities = () => {
 
 
   return (
-    <div>
+    <div className="allActivities">
+      <div className="allActivities2">
       <h1>Actividades</h1>
       {allActivitiesState?.map(({ id, nombre, dificultad, duracion, temporada, countries }) => (
         <div key={id} className="activity-card">
@@ -30,6 +33,7 @@ const AllActivities = () => {
           <p>Paises: {countries?.map(country => [country.name]).join(', ')}</p>
         </div>
       ))}
+      </div>
     </div>
   );
 };

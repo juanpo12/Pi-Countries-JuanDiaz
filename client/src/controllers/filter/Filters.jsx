@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { filterCountries, filterActvities } from "../../redux/actions"
+import style from '../cards/Cards.module.css'
 
 const Filter = () => {
     const dispatch = useDispatch()
+    const [momentRegion, setMomentRegion] = useState('All')
 
     const allActivities = useSelector(state => state.activitiesFilter)
-    console.log(allActivities);
 
     const optionActivities = allActivities.map(activity => {
         return <option key={activity.id} value={activity.id}>{activity.nombre}</option>
@@ -19,9 +20,6 @@ const Filter = () => {
 
 
 
-    const [momentActivities, setMomentActivities] = useState([])
-    const [momentRegion, setMomentRegion] = useState('All')
-
 
     const handleFilter = (event) => {
         const value = event.target.value;
@@ -30,23 +28,8 @@ const Filter = () => {
         dispatch(filterCountries(value))
     }
 
-    useEffect(() => {
-        localStorage.setItem("momentRegion", momentRegion);
-    }, [momentRegion]);
-
-    // useEffect(() => {
-    //     const savedRegion = localStorage.getItem("momentRegion");
-    //     if (savedRegion) {
-    //         setMomentRegion(savedRegion);
-    //         dispatch(filterCountries(savedRegion));
-    //     }
-    // }, [dispatch]);
-
-
-
-
     return (
-        <div>
+        <div className={style.filter}>
             <select value={momentRegion} onChange={handleFilter}>
                 <option value="All">Todos</option>
                 <option value="South America">America</option>

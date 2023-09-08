@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { useSelector } from 'react-redux';
 import Card from "../card/card";
 import { useEffect } from "react";
+import style from './Cards.module.css'
+import Filter from "../filter/Filters";
+import Order from "../order/Order";
 
 const Cards = () => {
   const countries = useSelector(state => state.allCountries);
   const allCountriesFilter = useSelector(state => state.allCountriesFilter);
   const [currentPage, setCurrentPage] = useState(1)
-
-
-
 
 
   const { countriesPerPage } = useSelector((state) => state)
@@ -25,7 +25,6 @@ const Cards = () => {
 
 
   const countriesToDisplay = allCountriesFilter.length > 0 ? newCountries : currentCountries;
-
   const buttonCountries = countriesToDisplay === newCountries ? allCountriesFilter : countries
 
   useEffect(() => {
@@ -33,33 +32,30 @@ const Cards = () => {
   }, [allCountriesFilter])
 
   return (
+    
+    <div className={style.boxCountry}>
+      <Filter/>
+      <Order/>
 
-    <div className="boxCountry">
-      <div>
-        <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
-          Anterior
-        </button>
-        <button onClick={() => handlePageChange(currentPage + 1)} disabled={indexOfLastCountry >= buttonCountries.length}>
-          Siguiente
-        </button>
+      <div className={style.cards}>
+        {countriesToDisplay.map(({ id, name, banderaImagen, continentes, capital, subregion, area, poblacion, activities }) => {
+          return (
+            <Card
+              key={id}
+              id={id}
+              name={name}
+              banderaImagen={banderaImagen}
+              continentes={continentes}
+              capital={capital}
+              subregion={subregion}
+              area={area}
+              poblacion={poblacion}
+              activities={activities}
+            />
+          );
+        })}
+
       </div>
-      {countriesToDisplay.map(({ id, name, banderaImagen, continentes, capital, subregion, area, poblacion, activities }) => {
-        return (
-          <Card
-            key={id}
-            id={id}
-            name={name}
-            banderaImagen={banderaImagen}
-            continentes={continentes}
-            capital={capital}
-            subregion={subregion}
-            area={area}
-            poblacion={poblacion}
-            // activities={activities.name}
-            activities={activities}
-          />
-        );
-      })}
       <div>
         <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
           Anterior

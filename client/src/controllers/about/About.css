@@ -1,0 +1,50 @@
+.imagen{
+    background-image: url(./henry.jpg);
+    width: 300px;
+    height: 300PX;
+    background-size: cover;
+    border-radius: 90rem;
+    animation: sombreado-animado 5s infinite alternate;
+}
+
+.description{
+    width: 700px;
+}
+
+.containerDivAbout{
+    background-color: rgba(24, 23, 90, 0.644);
+    height: 400px;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    backdrop-filter: blur(5px);
+    border-radius: 3rem;
+    padding: 20px;
+}
+
+.about2{
+    height: 90vh;
+    display: grid;
+    place-items: center;
+}
+
+@keyframes sombreado-animado {
+    0% {
+        box-shadow: 0 0 17px 3px #C586C0,0 0 4px 2px #C586C0;
+    }
+    20% {
+        box-shadow: 0 0 17px 3px #0ff,0 0 4px 2px #0ff;
+    }
+    40% {
+        box-shadow: 0 0 17px 3px #0f0,0 0 4px 2px #0f0;
+    }
+    60% {
+         box-shadow: 0 0 17px 3px #ffff01,0 0 4px 2px #ffff01;
+    }
+    80% {
+        box-shadow: 0 0 17px 3px #f00,0 0 4px 2px #f00;
+    }
+    100% {
+        box-shadow: 0 0 17px 3px #C586C0,0 0 4px 2px #C586C0;
+    }
+}

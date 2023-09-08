@@ -1,0 +1,17 @@
+.allActivities{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.allActivities2{
+    width: 450px;
+    background-color: rgba(24, 23, 90, 0.644);
+    backdrop-filter: blur(5px);
+    border-radius: 3rem;
+}
+.activity-card{
+    width: 450px;
+    
+}

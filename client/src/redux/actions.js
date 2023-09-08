@@ -1,4 +1,4 @@
-import { ORDER, LOAD_COUNTRIES, CHANGE_PAGE, ORDER_POPULATION, ORDER_ALPHABETICAl, COUNTRIES_FILTER, LOAD_ACTIVITIES, OPEN_MODAL, MODAL_CONTENT, CLOSE_MODAL, POST_ACTIVITY, FILTER_ACTIVITIES } from "./actions-type";
+import { SEARCH_COUNTRIES,ORDER, LOAD_COUNTRIES, CHANGE_PAGE, ORDER_POPULATION, ORDER_ALPHABETICAl, COUNTRIES_FILTER, LOAD_ACTIVITIES, POST_ACTIVITY, FILTER_ACTIVITIES, COUNTRY_BY_ID } from "./actions-type";
 import axios from 'axios';
 
 export const changePage = (page) => ({
@@ -10,6 +10,23 @@ export const loadCountries = (countries) => ({
     type: LOAD_COUNTRIES,
     payload: countries,
 });
+
+export const countryById = (country) => ({
+    type: COUNTRY_BY_ID,
+    payload: country
+})
+
+export const fetchCountryById = (id) => {
+    return async (dispatch) => {
+        try {
+            const response = await axios(`http://localhost:3001/countries/${id}`);
+            const country = response.data;
+                            dispatch(countryById(country));
+        } catch (error) {
+            console.error(error);
+        }
+    };
+}
 
 export const fetchCountries = () => {
     return async (dispatch) => {
@@ -46,13 +63,12 @@ export const fetchActivities = () => {
     };
 }
 
-export const fetchContent = (name) => {
+export const fetchCountriesSearchBar = (name) => {
     return async (dispatch) => {
-        const endpoint = `http://localhost:3001/countries?name=${name}`;
-        const { data } = await axios(endpoint);
+        const { data } = await axios(`http://localhost:3001/countries?name=${name}`);
         return dispatch({
-            type: MODAL_CONTENT,
-            payload: data[0]
+            type: SEARCH_COUNTRIES,
+            payload: data
         });
     };
 }
@@ -73,14 +89,6 @@ export const postBackActivity = (activityData) => {
         }
     };
 };
-
-export const openModal = () => ({
-    type: OPEN_MODAL,
-});
-
-export const closeModal = () => ({
-    type: CLOSE_MODAL,
-});
 
 export const orderPopulation = (order) => {
     return {

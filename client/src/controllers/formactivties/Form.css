@@ -1,0 +1,30 @@
+.star.selected {
+    color: yellow;
+}
+
+:root{
+    background-image: url(../lading/wallpaperbetter.com_1920x1080.jpg);
+}
+
+.containerForm{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    width: 100vw;
+}
+
+.form1{
+    height: 500px;
+    width: 600px;
+    /* background-color: rgba(58, 120, 156, 0.123); */
+    background-color: rgba(24, 23, 90, 0.644);
+    backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    border-radius: 4rem;
+}

@@ -1,13 +1,12 @@
-import { ORDER, LOAD_COUNTRIES, CHANGE_PAGE, ORDER_POPULATION, ORDER_ALPHABETICAl, COUNTRIES_FILTER, LOAD_ACTIVITIES, CLOSE_MODAL, OPEN_MODAL, MODAL_CONTENT, POST_ACTIVITY, FILTER_ACTIVITIES } from "./actions-type";
+import {SEARCH_COUNTRIES ,ORDER, LOAD_COUNTRIES, CHANGE_PAGE, ORDER_POPULATION, ORDER_ALPHABETICAl, COUNTRIES_FILTER, LOAD_ACTIVITIES, POST_ACTIVITY, FILTER_ACTIVITIES, COUNTRY_BY_ID } from "./actions-type";
 
 const initialState = {
     allCountries: [],
     allCountriesFilter: [],
-    allActivities: [],
     searchCountry: [],
+    allActivities: [],
     activitiesFilter: [],
     countriesPerPage: 10,
-    isModalOpen: false
 };
 
 
@@ -46,10 +45,8 @@ const reducer = (state = initialState, { type, payload }) => {
             }
 
         case FILTER_ACTIVITIES:
-            console.log(state.allCountries);
             const filteredActivities = state.allCountries.filter(country => {
                 for (const activity of country.activities) {
-                    console.log(activity);
                     if (activity.id === +payload) {
                         return activity
                     }
@@ -81,7 +78,19 @@ const reducer = (state = initialState, { type, payload }) => {
                 currentPage: payload,
             };
 
+        case COUNTRY_BY_ID:
+            return {
+                ...state,
+                searchCountry: payload
+            }
+
         case COUNTRIES_FILTER:
+            if(payload == 'All'){
+                return {
+                    ...state,
+                    allCountriesFilter: state.allCountries
+                }
+            }
             const filteredCountries = state.allCountries.filter(country => {
                 return country.continentes == payload;
             });
@@ -91,20 +100,10 @@ const reducer = (state = initialState, { type, payload }) => {
                 allCountriesFilter: filteredCountries
             };
 
-        case OPEN_MODAL:
+        case SEARCH_COUNTRIES:
             return {
                 ...state,
-                isModalOpen: true,
-            };
-        case CLOSE_MODAL:
-            return {
-                ...state,
-                isModalOpen: false,
-            };
-        case MODAL_CONTENT:
-            return {
-                ...state,
-                searchCountry: payload
+                allCountriesFilter: payload
             }
 
         default:

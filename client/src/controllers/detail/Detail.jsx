@@ -1,38 +1,21 @@
 import React from "react";
-import axios from 'axios';
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchCountryById } from "../../redux/actions";
 
 const Detail = () => {
 
-  const [country, setCountry] = useState({
-    id: "",
-    banderaImagen: "",
-    name: "",
-    continentes: "",
-    capital: "",
-    subregion: "",
-    area: "",
-    poblacion: "",
-    activities: [],
-  });
   const { id } = useParams();
 
+  const dispatch = useDispatch()
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const { data } = await axios(`http://localhost:3001/countries/${id}`);
-        if (data.name) {
-          setCountry(data);
-        }
-      } catch (error) {
-        window.alert('Error al obtener los detalles del país');
-      }
-    }
+    dispatch(fetchCountryById(id))
+  },[])
 
-    fetchData();
-  }, [id]);
-  const activityCountry = country?.activities.map(activity => activity.nombre).join(', ')
+  const country = useSelector(state => state.searchCountry)
+
+  const activityCountry = country?.activities?.map(activity => activity.nombre).join(', ')
 
   return (
     <div>

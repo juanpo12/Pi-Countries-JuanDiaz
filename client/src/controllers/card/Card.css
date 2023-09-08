@@ -1,0 +1,26 @@
+.box{
+    width: 250px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(58, 120, 156, 0.123);
+    backdrop-filter: blur(5px);
+    border-radius: 25px;
+}
+h2{
+    font-size: 15px;
+}
+
+.box-container{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 10px;
+}
+
+
+.img{
+    width: 230px;
+    height: 160px;
+}

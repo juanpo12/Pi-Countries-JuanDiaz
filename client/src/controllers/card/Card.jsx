@@ -1,22 +1,23 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import './card.css';
 
 
 
-const Card = ({id, name, banderaImagen, continentes, capital, subregion, area, poblacion, activity}) => {
+const Card = ({ id, name, banderaImagen, continentes, capital, subregion, area, poblacion, activity }) => {
 
-    
+
     return (
 
-        <div>
+
+        <div className="box">
+            <img src={banderaImagen} alt={name} className="img" />
+            <Link to={`/detail/${id}`}><h2>{name}</h2></Link>
             <div>
-                <Link to={`/detail/${id}`}><h2>{name}</h2></Link>
-                <img src={banderaImagen} alt={name} />
-                <div>
-                    <h2>{continentes}</h2>
-                </div>
+                <h2 className='continentes'>{continentes}</h2>
             </div>
         </div>
+
     )
 
 }
