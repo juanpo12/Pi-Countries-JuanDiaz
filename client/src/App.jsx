@@ -1,17 +1,15 @@
 import './App.css';
-import Nav from './controllers/nav/Nav';
-import Cards from './controllers/cards/Cards';
-import LandingPage from './controllers/lading/LandingPage';
+import Nav from './components/nav/Nav';
+import Cards from './components/cards/Cards';
+import LandingPage from './components/lading/LandingPage';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import Detail from './controllers/detail/Detail';
-import Order from './controllers/order/Order';
-import Filter from './controllers/filter/Filters';
+import Detail from './components/detail/Detail';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchCountries, fetchActivities } from './redux/actions';
-import FormActivity from './controllers/formactivties/FormActivity';
-import AllActivities from './controllers/allactivities/AllActivities';
-import About from './controllers/about/About';
+import FormActivity from './components/formactivties/FormActivity';
+import AllActivities from './components/allactivities/AllActivities';
+import About from './components/about/About';
 
 function App() {
   const dispatch = useDispatch()
@@ -29,14 +27,6 @@ function App() {
     <>
       <div className="landing">
         {pathname !== '/' && <Nav />}
-        {/* {pathname === '/home' && <Order />} */}
-        {/* <div className={pathname === '/home' ? 'show-filter' : 'hide-filter'}>
-          <Filter  />
-        </div> */}
-
-
-
-
 
         <Routes>
           <Route path='/form' element={<FormActivity />} />
@@ -46,6 +36,7 @@ function App() {
           <Route path='/activities' element={<AllActivities />} />
           <Route path='/about' element={<About />} />
         </Routes>
+        
       </div>
     </>
   )

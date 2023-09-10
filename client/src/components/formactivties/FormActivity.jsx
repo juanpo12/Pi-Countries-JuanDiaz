@@ -122,10 +122,6 @@ const FormActivity = () => {
             newErrors.nombre = "El nombre no puede estar vacío.";
         }
 
-        // if (input.dificultad < 1 || input.dificultad > 5) {
-        //     newErrors.dificultad = "La dificultad debe estar entre 1 y 5.";
-        // }
-
         if (input.duracion > 8 || input.duracion < 1) {
             newErrors.duracion = "La duración no puede exceder las 8 horas o ser un valor inválido.";
         }
@@ -163,7 +159,7 @@ const FormActivity = () => {
 
 
     const createActivity = async (event) => {
-        event.preventDefault()
+        event.target.value
 
 
         const activity = {
