@@ -23,4 +23,5 @@ h2{
 .img{
     width: 230px;
     height: 160px;
+    border-radius: 25px;
 }

@@ -34,8 +34,14 @@ const Cards = () => {
   return (
     
     <div className={style.boxCountry}>
-      <Filter/>
-      <Order/>
+      <div className={style.boxFiltered}>
+        <div className={style.boxFilter}>
+          <Filter/> 
+        </div>
+        <div className={style.boxOrder}>
+         <Order/>
+        </div>
+      </div>
 
       <div className={style.cards}>
         {countriesToDisplay.map(({ id, name, banderaImagen, continentes, capital, subregion, area, poblacion, activities }) => {

@@ -11,6 +11,38 @@
     background-attachment: fixed;
 }
 
+.boxFiltered{
+    width: 600px;
+    height: 100px;
+    display: flex;
+    margin: 10px;
+}
+
+.boxOrder{
+    margin-left: 25px;
+    width: 20vw;
+    display: flex;
+    flex-direction: row;
+}
+
+.boxFilter{
+    grid: 20px;
+    width: 15vw;
+    display: flex;
+    flex-direction: row;
+}
+
+.selectFilter{
+    justify-content: center;
+    align-items: center;
+}
+
+.filter{
+    gap: 20px;
+
+    display: flex;
+}
+
 .cards{
     display: flex;
     flex-wrap: wrap;
@@ -23,6 +55,3 @@
     overflow: auto;
 }
 
-.filter{
-    border: 1px solid white;
-}

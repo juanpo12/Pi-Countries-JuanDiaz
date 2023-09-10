@@ -7,7 +7,6 @@ const countriesByName = async (name) => {
         where: { name: { [Op.iLike]: `%${name}%` } },
         include: Activity
     });
-    console.log(countryName);
     if (!countryName.length) throw Error('No se encontraron países que coincidan con la búsqueda.')
 
     return countryName

@@ -6,7 +6,7 @@ const { getActivities } = require('../controllers/getActivities')
 
 const router = Router();
 
-router.get('/countries', obtenerPaises );
+router.get('/countries', obtenerPaises);
 
 router.get('/countries/:idPais', countryById);
 

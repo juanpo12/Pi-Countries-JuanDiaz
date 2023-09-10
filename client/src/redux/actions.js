@@ -21,7 +21,7 @@ export const fetchCountryById = (id) => {
         try {
             const response = await axios(`http://localhost:3001/countries/${id}`);
             const country = response.data;
-                            dispatch(countryById(country));
+            dispatch(countryById(country));
         } catch (error) {
             console.error(error);
         }

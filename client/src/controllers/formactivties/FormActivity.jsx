@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux"
 import { postBackActivity } from '../../redux/actions'
 import './Form.css'
@@ -7,8 +7,8 @@ const FormActivity = () => {
     const dispatch = useDispatch()
     const [activityData, setActivityData] = useState({
         nombre: "",
-        dificultad: 0,
-        duracion: 0,
+        dificultad: 1,
+        duracion: 1,
         temporada: [],
     });
 
@@ -32,14 +32,24 @@ const FormActivity = () => {
 
     const handleSeasonChange = (event) => {
         const selectedSeason = event.target.value;
+        console.log(seasons.length);
         if (seasons.includes(selectedSeason)) {
             const seasonFiltered = seasons.filter((season) => season !== selectedSeason)
             setSeasons(seasonFiltered);
         } else {
-            setSeasons([...seasons, selectedSeason])
+            const updatedSeasons = [...seasons, selectedSeason]
+            setSeasons(updatedSeasons);
         }
 
     }
+
+    useEffect(() => {
+        const isSeasonsEmpty = seasons.length === 0;
+        setErrors({
+            ...errors,
+            temporada: isSeasonsEmpty ? "Debe seleccionar al menos una temporada" : "",
+        });
+    }, [seasons]);
 
     const temporadas = [
         'Primavera', 'Verano', 'Otoño', 'Invierno'
@@ -57,12 +67,22 @@ const FormActivity = () => {
     const handleCountryChange = (event) => {
         const selectedCountryId = event.target.value;
 
-
         if (!countriesSelect.includes(selectedCountryId)) {
-
             setCountriesSelect([...countriesSelect, selectedCountryId]);
+            validateForm([...countriesSelect, selectedCountryId])
         }
     };
+
+
+    useEffect(() => {
+        const isCountriesEmpty = countriesSelect.length === 0;
+
+        setErrors({
+            ...errors,
+            paises: isCountriesEmpty ? "Debe seleccionar al menos un pais" : "",
+        });
+
+    }, [countriesSelect]);
 
 
 
@@ -89,49 +109,62 @@ const FormActivity = () => {
         return stars;
     };
 
+    const validateForm = (input) => {
+        const newErrors = {
+            nombre: "",
+            dificultad: "",
+            duracion: "",
+            temporada: "",
+            paises: "",
+        };
+
+        if (input.nombre === "") {
+            newErrors.nombre = "El nombre no puede estar vacío.";
+        }
+
+        // if (input.dificultad < 1 || input.dificultad > 5) {
+        //     newErrors.dificultad = "La dificultad debe estar entre 1 y 5.";
+        // }
+
+        if (input.duracion > 8 || input.duracion < 1) {
+            newErrors.duracion = "La duración no puede exceder las 8 horas o ser un valor inválido.";
+        }
+        setErrors(newErrors);
+
+        return (
+            !newErrors.nombre &&
+            !newErrors.dificultad &&
+            !newErrors.duracion &&
+            !newErrors.temporada &&
+            !newErrors.paises
+        );
+    };
+
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setActivityData({
             ...activityData,
             [name]: value,
         });
+        validateForm({
+            [name]: value
+        });
+
+
     };
 
-    const [errors, setErrors] = useState('');
-    // const validations = () => {
-    //     let newErrors = {
-    //         ...errors,
-    //         nombre: false,
-    //         dificultad: false,
-    //         duracion: false
-    //     };
+    const [errors, setErrors] = useState({
+        nombre: "",
+        dificultad: '',
+        duracion: '',
+        temporada: '',
+        paises: '',
+    });
 
-    //     if (activityData.nombre.trim() === "") {
-    //         newErrors = {
-    //             ...newErrors,
-    //             nombre: true
-    //         };
-    //     }
-
-    //     if (isNaN(activityData.dificultad) || activityData.dificultad === 0) {
-    //         newErrors = {
-    //             ...newErrors,
-    //             dificultad: true
-    //         };
-    //     }
-
-    //     if (isNaN(activityData.duracion) || activityData.duracion === 0) {
-    //         newErrors = {
-    //             ...newErrors,
-    //             duracion: true
-    //         };
-    //     }
-
-    //     setErrors(newErrors);
-    // };
 
     const createActivity = async (event) => {
         event.preventDefault()
+
 
         const activity = {
             nombre: activityData.nombre,
@@ -141,36 +174,26 @@ const FormActivity = () => {
             paises: countriesSelect
         };
 
-        if (activityData.nombre === "") {
-            setErrors(" El nombre no puede estar vacio.");
-        }else if(activityData.dificultad < 1 || activityData.dificultad > 5 ){
-            setErrors("La dificultad debe estar entre 1 y 5.");
+        
+        dispatch(postBackActivity(activity));
 
-        } else if (activityData.duracion > 8 || activityData.duracion < 1) {
-            setErrors("La duración no puede exceder las 8 horas o valor invalido.");
-        } else if( activity.temporada.length === 0){
-            setErrors("Debes seleccionar una temporada.");
+        setActivityData({
+            nombre: "",
+            dificultad: 0,
+            duracion: 0,
+            temporada: [],
 
-        }else if(activity.paises.length === 0){
-            setErrors("Debes seleccionar al menos un pais.");
+        });
+        setCountriesSelect([]);
+        setSeasons([]);
+        alert("¡Actividad creada con éxito!")
 
-        }else {
-            
-            setErrors("");
-            dispatch(postBackActivity(activity));
 
-            setActivityData({
-                nombre: "",
-                dificultad: 0,
-                duracion: 0,
-                temporada: [],
 
-            });
-            setCountriesSelect([]);
-            setSeasons([]);
-            alert("¡Actividad creada con éxito!")
 
-        }
+
+
+
     };
 
 
@@ -182,7 +205,7 @@ const FormActivity = () => {
 
 
 
-    
+
 
     const countriesSelectMap = countriesSelect.map((countryId, index) => (
         <button key={index} value={countryId.id} onClick={() => deleteCountry(countryId)}> {countryId} </button>
@@ -200,10 +223,12 @@ const FormActivity = () => {
                         value={activityData.nombre}
                         onChange={handleInputChange}
                     />
+                    {errors.nombre && <p style={{ color: "red" }}>{errors.nombre}</p>}
                 </div>
 
                 <div>
                     <label>Dificultad: </label><div className="star-rating">{renderStars()}</div>
+                    {errors.dificultad && <p style={{ color: "red" }}>{errors.dificultad}</p>}
                 </div>
 
                 <div>
@@ -214,11 +239,13 @@ const FormActivity = () => {
                         value={activityData.duracion}
                         onChange={handleInputChange}
                     />
+                    {errors.duracion && <p style={{ color: "red" }}>{errors.duracion}</p>}
                 </div>
 
                 <div>
                     <label>Temporadas:</label>
                     {temporadas}
+                    {errors.temporada && <p style={{ color: "red" }}>{errors.temporada}</p>}
                 </div>
 
                 <select onChange={handleCountryChange}>
@@ -226,9 +253,8 @@ const FormActivity = () => {
                     {options}
                 </select>
                 <p>Países seleccionados: {countriesSelectMap}</p>
-
+                {errors.paises && <p style={{ color: "red" }}>{errors.paises}</p>}
                 <button onClick={createActivity}>Crear</button>
-                {errors && <p style={{ color: "red" }}>{errors}</p>}
             </div>
         </div>
 

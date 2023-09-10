@@ -1,0 +1,14 @@
+.boxDetail{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.boxDetailIn{
+    width: 450px;
+    background-color: rgba(24, 23, 90, 0.644);
+    backdrop-filter: blur(5px);
+    border-radius: 3rem;
+}
