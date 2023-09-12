@@ -109,6 +109,7 @@ const FormActivity = () => {
         return stars;
     };
 
+
     const validateForm = (input) => {
         const newErrors = {
             nombre: "",
@@ -182,26 +183,9 @@ const FormActivity = () => {
         });
         setCountriesSelect([]);
         setSeasons([]);
-        alert("¡Actividad creada con éxito!")
-
-
-
-
-
-
+        alert("¡Actividad creada con éxito!");
 
     };
-
-
-
-
-
-
-
-
-
-
-
 
     const countriesSelectMap = countriesSelect.map((countryId, index) => (
         <button key={index} value={countryId.id} onClick={() => deleteCountry(countryId)}> {countryId} </button>
@@ -250,7 +234,7 @@ const FormActivity = () => {
                 </select>
                 <p>Países seleccionados: {countriesSelectMap}</p>
                 {errors.paises && <p style={{ color: "red" }}>{errors.paises}</p>}
-                <button onClick={createActivity}>Crear</button>
+                <button onClick={createActivity} >Crear</button>
             </div>
         </div>
 

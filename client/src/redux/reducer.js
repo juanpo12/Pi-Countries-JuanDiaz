@@ -6,6 +6,7 @@ const initialState = {
     searchCountry: [],
     allActivities: [],
     activitiesFilter: [],
+    countriesActivitiesFiltered: [],
     countriesPerPage: 10,
 };
 
@@ -46,6 +47,9 @@ const reducer = (state = initialState, { type, payload }) => {
 
         case FILTER_ACTIVITIES:
             const filteredActivities = state.allCountries.filter(country => {
+                if(payload === 'Seleccione una actividad'){
+                    return true
+                }
                 for (const activity of country.activities) {
                     if (activity.id === +payload) {
                         return activity
@@ -55,7 +59,8 @@ const reducer = (state = initialState, { type, payload }) => {
             })
             return {
                 ...state,
-                allCountriesFilter: filteredActivities
+                allCountriesFilter: filteredActivities,
+                countriesActivitiesFiltered: filteredActivities
             }
 
         case LOAD_COUNTRIES:
@@ -91,13 +96,18 @@ const reducer = (state = initialState, { type, payload }) => {
                     allCountriesFilter: state.allCountries
                 }
             }
-            const filteredCountries = state.allCountries.filter(country => {
+            //para filtrar en los countries da las actividades
+            const countryAfiltered = state.countriesActivitiesFiltered.length > 0 ? state.countriesActivitiesFiltered : state.allCountries
+
+            
+            const filteredCountries = countryAfiltered.filter(country => {
                 return country.continentes == payload;
             });
 
             return {
                 ...state,
-                allCountriesFilter: filteredCountries
+                allCountriesFilter: filteredCountries.length > 0 ? filteredCountries : []
+
             };
 
         case SEARCH_COUNTRIES:

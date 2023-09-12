@@ -2,10 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import './card.css';
 
-
-
-const Card = ({ id, name, banderaImagen, continentes, capital, subregion, area, poblacion, activity }) => {
-
+const Card = ({ id, name, banderaImagen, continentes}) => {
 
     return (
 
