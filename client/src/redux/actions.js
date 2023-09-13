@@ -1,4 +1,4 @@
-import { SEARCH_COUNTRIES,ORDER, LOAD_COUNTRIES, CHANGE_PAGE, ORDER_POPULATION, ORDER_ALPHABETICAl, COUNTRIES_FILTER, LOAD_ACTIVITIES, POST_ACTIVITY, FILTER_ACTIVITIES, COUNTRY_BY_ID } from "./actions-type";
+import { SEARCH_COUNTRIES, ORDER, LOAD_COUNTRIES, CHANGE_PAGE, ORDER_POPULATION, ORDER_ALPHABETICAl, COUNTRIES_FILTER, LOAD_ACTIVITIES, POST_ACTIVITY, FILTER_ACTIVITIES, COUNTRY_BY_ID } from "./actions-type";
 import axios from 'axios';
 
 export const changePage = (page) => ({
@@ -54,7 +54,7 @@ export const loadActivities = (activities) => ({
 export const fetchActivities = () => {
     return async (dispatch) => {
         try {
-            const {data} = await axios('http://localhost:3001/activities');
+            const { data } = await axios('http://localhost:3001/activities');
 
             dispatch(loadActivities(data));
         } catch (error) {
@@ -65,11 +65,21 @@ export const fetchActivities = () => {
 
 export const fetchCountriesSearchBar = (name) => {
     return async (dispatch) => {
-        const { data } = await axios(`http://localhost:3001/countries?name=${name}`);
-        return dispatch({
-            type: SEARCH_COUNTRIES,
-            payload: data
-        });
+        try {
+            const { data } = await axios(`http://localhost:3001/countries?name=${name}`);
+
+
+            return dispatch({
+                type: SEARCH_COUNTRIES,
+                payload: data
+            });
+
+        } catch (error) {
+            return dispatch({
+                type: SEARCH_COUNTRIES,
+                payload: []
+            });
+        }
     };
 }
 
@@ -81,7 +91,7 @@ export const postActivity = (data) => ({
 export const postBackActivity = (activityData) => {
     return async (dispatch) => {
         try {
-            const {data} = await axios.post('http://localhost:3001/activities', activityData);
+            const { data } = await axios.post('http://localhost:3001/activities', activityData);
             dispatch(postActivity(data));
         } catch (error) {
 
