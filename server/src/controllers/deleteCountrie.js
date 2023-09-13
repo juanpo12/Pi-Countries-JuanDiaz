@@ -1,16 +1,16 @@
 const { Activity } = require('../db');
 
 
-const deleteCountrie = async (req, res) => {
+const deleteActivity = async (req, res) => {
     try {
         const { idAct } = req.params;
     
-        const activity = await Activity.destroy({
+        await Activity.destroy({
             where: {
                 id: idAct
             }
         })
-        return res.status(200).json(activity);
+        return res.status(200).send(`${idAct} eliminado`);
         
     } catch (error) {
         return res.status(404).send(error.message)
@@ -19,5 +19,5 @@ const deleteCountrie = async (req, res) => {
 
 
 module.exports = {
-    deleteCountrie
+    deleteActivity
 }

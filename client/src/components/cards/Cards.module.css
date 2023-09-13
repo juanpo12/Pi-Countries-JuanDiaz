@@ -19,6 +19,13 @@
 
 }
 
+.pagination{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    
+}
+
 .boxOrder{
     margin-left: 25px;
     width: 20vw;

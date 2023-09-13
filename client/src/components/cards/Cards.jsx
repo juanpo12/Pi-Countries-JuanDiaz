@@ -51,12 +51,15 @@ const Cards = () => {
 
       </div>
       <div>
-        <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
-          Anterior
-        </button>
-        <button onClick={() => handlePageChange(currentPage + 1)} disabled={indexOfLastCountry >= allCountriesFilter.length}>
-          Siguiente
-        </button>
+        <div className={style.pagination}>
+          <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+            Anterior
+          </button>
+          <p>{currentPage} of {Math.ceil(allCountriesFilter.length / countriesPerPage)}</p>
+          <button onClick={() => handlePageChange(currentPage + 1)} disabled={indexOfLastCountry >= allCountriesFilter.length}>
+            Siguiente
+          </button>
+        </div>
       </div>
     </div>
   );

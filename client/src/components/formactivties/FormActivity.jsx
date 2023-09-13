@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux"
 import { postBackActivity } from '../../redux/actions'
 import './Form.css'
-import { disableButton } from "../../utils/validate/validate";
+import { disableButton, validateForm } from "../../utils/validate/validate";
 
 const FormActivity = () => {
     const dispatch = useDispatch()
@@ -57,7 +57,7 @@ const FormActivity = () => {
             validateForm({
                 ...activityData,
                 temporada: updatedSeasons, // Pasar las temporadas actualizadas
-            });
+            }, setErrors);
         }
         // Después de actualizar las temporadas, valida el formulario
 
@@ -87,7 +87,7 @@ const FormActivity = () => {
     const handleCountryChange = (event) => {
         const selectedCountryId = event.target.value;
         let updatedCountries;
-    
+        
         if (!countriesSelect.includes(selectedCountryId)) {
             updatedCountries = [...countriesSelect, selectedCountryId];
             setCountriesSelect(updatedCountries);
@@ -102,13 +102,13 @@ const FormActivity = () => {
             dificultad: activityData.dificultad,
             duracion: activityData.duracion,
             temporada: seasons,
-            paises: updatedCountries, // Actualiza con la nueva selección de países
-        });
+            paises: updatedCountries
+        }, setErrors);
     };
 
 
     useEffect(() => {
-        const isCountriesEmpty = countriesSelect.length === 0;
+        const isCountriesEmpty = countriesSelect.length > 1;
 
         setErrors({
             ...errors,
@@ -142,43 +142,6 @@ const FormActivity = () => {
         return stars;
     };
 
-
-    const validateForm = (input) => {
-        const newErrors = {
-            nombre: "",
-            dificultad: "",
-            duracion: "",
-            temporada: "",
-            paises: "",
-        };
-
-        if (input.nombre === "") {
-            newErrors.nombre = "El nombre no puede estar vacío.";
-        }
-
-        if (input.duracion > 8 || input.duracion < 1) {
-            newErrors.duracion = "La duración no puede exceder las 8 horas o ser un valor inválido.";
-        }
-
-        if (Array.isArray(input.temporada) && input.temporada.length === 0) {
-            newErrors.temporada = "Debe seleccionar al menos una temporada.";
-        }
-    
-        if (Array.isArray(input.paises) && input.paises.length === 0) {
-            newErrors.paises = "Debe seleccionar al menos un país.";
-        }
-    
-        const isValid = !Object.values(newErrors).some(error => error !== "");
-
-        // Actualiza los errores
-        setErrors(newErrors);
-    
-        // Devuelve si el formulario es válido o no
-        return isValid;
-    };
-
-
-
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setActivityData({
@@ -188,20 +151,17 @@ const FormActivity = () => {
         validateForm({
             ...activityData,
             [name]: value
-        });
+        }, setErrors);
         setIsFormValid(validateForm({
             ...activityData,
             [name]: value
-        }))
+        }, setErrors));
 
 
     };
 
 
-
-
     useEffect(() => {
-        console.log(errors);
         setIsFormValid(!errors.nombre && !errors.dificultad && !errors.duracion && !errors.temporada && !errors.paises);
     }, [errors]);
 
@@ -219,7 +179,7 @@ const FormActivity = () => {
             paises: countriesSelect
         };
 
-        if (validateForm(activity)) {
+        if (validateForm(activity, setErrors)) {
             dispatch(postBackActivity(activity));
 
             setActivityData({
