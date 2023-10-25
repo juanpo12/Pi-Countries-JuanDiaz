@@ -11,6 +11,7 @@
     background-attachment: fixed;
 }
 
+
 .boxFiltered{
     width: 600px;
     height: 100px;
@@ -27,7 +28,7 @@
 }
 
 .boxOrder{
-    margin-left: 25px;
+    margin-left: 50px;
     width: 20vw;
     display: flex;
     flex-direction: row;

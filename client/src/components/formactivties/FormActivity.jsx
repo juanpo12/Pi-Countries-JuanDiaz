@@ -8,6 +8,7 @@ const FormActivity = () => {
     const dispatch = useDispatch()
     const [activityData, setActivityData] = useState({
         nombre: "",
+        autor: "",
         dificultad: 1,
         duracion: 1,
         temporada: [],
@@ -19,6 +20,7 @@ const FormActivity = () => {
         duracion: '',
         temporada: '',
         paises: '',
+        autor: ""
     });
 
     const [isFormValid, setIsFormValid] = useState(false);
@@ -108,7 +110,7 @@ const FormActivity = () => {
 
 
     useEffect(() => {
-        const isCountriesEmpty = countriesSelect.length > 1;
+        const isCountriesEmpty = countriesSelect.length < 1;
 
         setErrors({
             ...errors,
@@ -172,6 +174,7 @@ const FormActivity = () => {
 
 
         const activity = {
+            autor: activityData.autor,
             nombre: activityData.nombre,
             dificultad: activityData.dificultad,
             duracion: activityData.duracion,
@@ -187,6 +190,7 @@ const FormActivity = () => {
                 dificultad: 0,
                 duracion: 0,
                 temporada: [],
+                autor: ''
 
             });
             setCountriesSelect([]);
@@ -216,6 +220,16 @@ const FormActivity = () => {
                         onChange={handleInputChange}
                     />
                     {errors.nombre && <p style={{ color: "red" }}>{errors.nombre}</p>}
+                </div>
+                <div>
+                    <label htmlFor="autor">Autor: </label>
+                    <input
+                        type="text"
+                        name="autor"
+                        value={activityData.autor}
+                        onChange={handleInputChange}
+                    />
+                    
                 </div>
 
                 <div>

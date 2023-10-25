@@ -1,18 +1,21 @@
-const { Activity } = require('../db');
+const { Activity, Country} = require('../db');
 
-const putCountry = async (req, res) => {
+const putActivity = async (req, res) => {
     try {
         const { idAct } = req.params;
-        const { nombre, dificultad, duracion, temporada} = req.body;
-    
+        const { nombre, dificultad, duracion, temporada, paises} = req.body;
         const activity = await Activity.findByPk(idAct);
         await activity.update({
             nombre,
             dificultad,
             duracion,
-            temporada
+            temporada,
         })
-        
+        await activity.setCountries([]);
+        const newCountries = await Country.findAll({
+            where: {id: paises},
+        });
+        await activity.addCountries(newCountries)
         return res.status(200).json(activity);
     
         
@@ -24,5 +27,5 @@ const putCountry = async (req, res) => {
 }
 
 module.exports = {
-    putCountry
+    putActivity
 }

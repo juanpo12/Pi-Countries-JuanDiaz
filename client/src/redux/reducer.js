@@ -1,4 +1,4 @@
-import {SEARCH_COUNTRIES ,ORDER, LOAD_COUNTRIES, CHANGE_PAGE, ORDER_POPULATION, ORDER_ALPHABETICAl, COUNTRIES_FILTER, LOAD_ACTIVITIES, POST_ACTIVITY, FILTER_ACTIVITIES, COUNTRY_BY_ID } from "./actions-type";
+import {SEARCH_COUNTRIES ,ORDER, LOAD_COUNTRIES, CHANGE_PAGE, ORDER_POPULATION, ORDER_ALPHABETICAl, COUNTRIES_FILTER, LOAD_ACTIVITIES, POST_ACTIVITY, FILTER_ACTIVITIES, COUNTRY_BY_ID} from "./actions-type";
 
 const initialState = {
     allCountries: [],
@@ -6,6 +6,7 @@ const initialState = {
     searchCountry: [],
     allActivities: [],
     activitiesFilter: [],
+    orderPage: "A",
     countriesActivitiesFiltered: [],
     countriesPerPage: 10,
 };
@@ -13,10 +14,12 @@ const initialState = {
 
 const reducer = (state = initialState, { type, payload }) => {
     switch (type) {
+
         case ORDER:
             const allCountriesCopy = [...state.allCountriesFilter];
             return {
                 ...state,
+                orderPage: payload === "D" ? "D" : "A",
                 allCountriesFilter: payload === "A"
                     ? allCountriesCopy.sort((a, b) => a.id.localeCompare(b.id))
                     : allCountriesCopy.sort((a, b) => b.id.localeCompare(a.id)),
@@ -26,6 +29,7 @@ const reducer = (state = initialState, { type, payload }) => {
             const allCountriesOrderAlp = [...state.allCountriesFilter];
             return {
                 ...state,
+                orderPage: 'O' ,
                 allCountriesFilter: payload === 'O'
                     ? allCountriesOrderAlp.sort((a, b) => a.name.localeCompare(b.name))
                     : allCountriesOrderAlp.sort((a, b) => b.name.localeCompare(a.name))
@@ -35,6 +39,7 @@ const reducer = (state = initialState, { type, payload }) => {
             const allCountriesOrder = [...state.allCountriesFilter]
             return {
                 ...state,
+                orderPage: 'P',
                 allCountriesFilter: payload === 'P'
                     ? allCountriesOrder.sort((a, b) => a.poblacion - b.poblacion)
                     : allCountriesOrder.sort((a, b) => b.poblacion - a.poblacion)
@@ -93,10 +98,10 @@ const reducer = (state = initialState, { type, payload }) => {
             if(payload == 'All'){
                 return {
                     ...state,
-                    allCountriesFilter: state.allCountries
+                    allCountriesFilter: state.countriesActivitiesFiltered.length > 0 ? state.countriesActivitiesFiltered : state.allCountries
                 }
             }
-            //para filtrar en los countries da las actividades
+  
             const countryAfiltered = state.countriesActivitiesFiltered.length > 0 ? state.countriesActivitiesFiltered : state.allCountries
 
             

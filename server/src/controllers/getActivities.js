@@ -5,7 +5,6 @@ const getActivities = async (req, res) => {
         const allActivities = await Activity.findAll({
             include: {
                 model: Country,
-
             }
         })
         if(!allActivities) throw Error('no hay actividades disponibles')

@@ -7,6 +7,10 @@ module.exports = (sequelize) => {
             primaryKey: true,
             autoIncrement: true
         },
+        autor: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
         nombre: {
             type: DataTypes.STRING,
             allowNull: false

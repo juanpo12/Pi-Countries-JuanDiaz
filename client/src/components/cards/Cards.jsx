@@ -20,9 +20,13 @@ const Cards = () => {
     setCurrentPage(page)
   };
 
-  useEffect(() => {
-    setCurrentPage(1)
-  }, [allCountriesFilter])
+  const changeOrder = newCountries.length !== allCountriesFilter.length
+    useEffect(() => {
+      if(changeOrder){
+        setCurrentPage(1)
+      }
+    },[allCountriesFilter.length])
+  
 
   return (
     

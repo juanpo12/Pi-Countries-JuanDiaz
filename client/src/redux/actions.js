@@ -1,6 +1,32 @@
-import { SEARCH_COUNTRIES, ORDER, LOAD_COUNTRIES, CHANGE_PAGE, ORDER_POPULATION, ORDER_ALPHABETICAl, COUNTRIES_FILTER, LOAD_ACTIVITIES, POST_ACTIVITY, FILTER_ACTIVITIES, COUNTRY_BY_ID } from "./actions-type";
+import { DELETE_ACTIVITY, SEARCH_COUNTRIES, ORDER, LOAD_COUNTRIES, CHANGE_PAGE, ORDER_POPULATION, ORDER_ALPHABETICAl, COUNTRIES_FILTER, LOAD_ACTIVITIES, POST_ACTIVITY, FILTER_ACTIVITIES, COUNTRY_BY_ID, PUT_ACTIVITY } from "./actions-type";
 import axios from 'axios';
 
+export const deleteActivity = (id) => {
+    return async (dispatch) => {
+        try {
+            const { data } = await axios.delete(`http://localhost:3001/activities/${id}`)
+            dispatch({ type: DELETE_ACTIVITY, payload: data })
+
+
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+
+}
+
+export const putActivity = (id, activity) => {
+    return async () => {
+        try {
+            await axios.put(`http://localhost:3001/activities/${id}`, activity)
+
+        } catch (error) {
+            console.error(error)
+        }
+    }
+}
 export const changePage = (page) => ({
     type: CHANGE_PAGE,
     payload: page,
@@ -67,7 +93,6 @@ export const fetchCountriesSearchBar = (name) => {
     return async (dispatch) => {
         try {
             const { data } = await axios(`http://localhost:3001/countries?name=${name}`);
-
 
             return dispatch({
                 type: SEARCH_COUNTRIES,

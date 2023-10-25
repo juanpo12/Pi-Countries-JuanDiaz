@@ -10,6 +10,7 @@ import { fetchCountries, fetchActivities } from './redux/actions';
 import FormActivity from './components/formactivties/FormActivity';
 import AllActivities from './components/allactivities/AllActivities';
 import About from './components/about/About';
+import PuttActivity from './components/putActivity/PuttActivity';
 
 function App() {
   const dispatch = useDispatch()
@@ -35,6 +36,7 @@ function App() {
           <Route path='/' element={<LandingPage />} />
           <Route path='/activities' element={<AllActivities />} />
           <Route path='/about' element={<About />} />
+          <Route path='/update/:activityId' element={<PuttActivity />}/>
         </Routes>
         
       </div>
