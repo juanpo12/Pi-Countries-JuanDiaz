@@ -2,7 +2,7 @@ import React from "react"
 import SearchBar from "../searchbar/SearchBar"
 import { Link } from "react-router-dom"
 import { useLocation } from "react-router-dom"
-import './nav.css'
+import './Nav.css'
 
 const Nav = () => {
 

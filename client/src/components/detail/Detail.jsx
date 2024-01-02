@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCountryById } from "../../redux/actions";
-import CardActivities from "../cardActivities/cardActivities";
+import CardActivities from "../cardActivities/CardActivities";
 import './Detail.css';
 
 const Detail = () => {
